@@ -20,6 +20,48 @@ export default function Scoreboard() {
     { id: 4, name: "Luis Bossa", score: 8 },
   ]);
 
+  // Defining a callback function to be passed as callback props
+  const incrementScore = (id) => {
+    console.log("Which player's button have I clicked? ", id);
+
+    const new_players_array = players.map((p) => {
+      //decide whether this player's score needs to be incremented
+      if (p.id === id) {
+        // and if so, create, a new player object,
+        return {
+          ...p,
+          // and then overriding the score property to be incremented
+          score: p.score + 1,
+        };
+      } else {
+        return p;
+      }
+    });
+    set_players(new_players_array);
+  };
+  const reset = () => {
+    const resetHere = players.map((p) => {
+      console.log("testing the button");
+      return {
+        ...p,
+        score: (p.score = 0),
+      };
+    });
+    set_players(resetHere);
+  };
+
+  const randomize = () => {
+    const randomScores = players.map((p) => {
+      console.log("Testing the randomize button");
+
+      return {
+        ...p,
+        score: (p.score = parseInt(Math.random() * 100)),
+      };
+    });
+    set_players(randomScores);
+  };
+
   const change_sorting = (event) => {
     console.log("New sort order", event.target.value);
     set_sort_by(event.target.value);
@@ -39,10 +81,18 @@ export default function Scoreboard() {
           <option value="score">Sort by score</option>
           <option value="name">Sort by name</option>
         </select>
+        <button onClick={reset}>Reset Scores</button>
       </p>
       {players_sorted.map((p) => (
-        <Player key={p.id} naam={p.name} punten={p.score} />
+        <Player
+          key={p.id}
+          id={p.id}
+          naam={p.name}
+          punten={p.score}
+          incrementScore={incrementScore}
+        />
       ))}
+      <button onClick={randomize}>Click to randomize the scores ;)</button>
 
       <AddPlayer />
     </div>
