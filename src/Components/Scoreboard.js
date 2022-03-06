@@ -94,7 +94,11 @@ export default function Scoreboard() {
       ))}
       <button onClick={randomize}>Click to randomize the scores ;)</button>
 
-      <AddPlayer />
+      <AddPlayer
+        addPlayer={(name) => {
+          console.log("Lets add a new player called:", name);
+        }}
+      />
     </div>
   );
 }
