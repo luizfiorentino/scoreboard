@@ -20,6 +20,18 @@ export default function Scoreboard() {
     { id: 4, name: "Luis Bossa", score: 8 },
   ]);
 
+  const addPlayer = (name) => {
+    console.log("Lets set a new player called", name);
+    set_players([
+      ...players,
+      {
+        id: players.length + 1,
+        name,
+        score: 0,
+      },
+    ]);
+  };
+
   // Defining a callback function to be passed as callback props
   const incrementScore = (id) => {
     console.log("Which player's button have I clicked? ", id);
@@ -94,11 +106,7 @@ export default function Scoreboard() {
       ))}
       <button onClick={randomize}>Click to randomize the scores ;)</button>
 
-      <AddPlayer
-        addPlayer={(name) => {
-          console.log("Lets add a new player called:", name);
-        }}
-      />
+      <AddPlayer addPlayer={addPlayer} />
     </div>
   );
 }
